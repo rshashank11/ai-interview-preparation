@@ -63,7 +63,7 @@ export async function signIn(params: SignInParams) {
 export async function setSessionCookie(idToken: string) {
   const cookieStore = await cookies()
 
-  const sessionCookie = await auth.createSessionCookie(idToken, {expiresIn: 60*60*24*7}) // Expires in 1 Week(In seconds)
+  const sessionCookie = await auth.createSessionCookie(idToken, {expiresIn: 60*60*24*7*1000}) // Expires in 1 Week(In seconds)
 
   cookieStore.set('session', sessionCookie, {
     maxAge: 60*60*24*7,
@@ -92,8 +92,11 @@ export async function getCurrentUser(): Promise<User | null> {
       ...userRecord.data(),
       id: userRecord.id
     } as User
-  } catch(e) {
-    console.error(e)
+  } catch(e: any) {
+    if(e.code === 'auth/session-cookie-expired') {
+      return null;
+    }
+    console.error('Unexpected authentication error', e)
     return null;
   }
 }
