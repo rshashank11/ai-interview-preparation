@@ -3,7 +3,7 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC15YVWbX7AMTxVwGQ8OQ0XZp8ezBuqBcQ",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "ai-interview-preparation-c7f69.firebaseapp.com",
   projectId: "ai-interview-preparation-c7f69",
   storageBucket: "ai-interview-preparation-c7f69.firebasestorage.app",
